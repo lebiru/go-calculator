@@ -8,7 +8,7 @@ defaults to localhost:8080
 
 Endpoints:
 
-add?numOne={NUM_ONE}&numTwo={NUM_TWO}
+add?numOne={NUM_ONE}&numTwo={NUM_TWO}  
 subtract?subtrahend={SUBTRAHEND}&minuend={MINUEND}
 
 
