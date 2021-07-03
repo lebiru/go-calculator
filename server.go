@@ -67,6 +67,32 @@ func multiplyHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func divisionHandler(w http.ResponseWriter, r *http.Request) {
+
+	if err := r.ParseForm(); err != nil {
+		fmt.Fprintf(w, "ParseForm() err:%v", err)
+		return
+	}
+
+	fmt.Fprintf(w, "POST request successful \n")
+	dividend, errOne := strconv.Atoi(r.FormValue("dividend"))
+	if errOne != nil {
+		//handle error
+	}
+	divisor, errTwo := strconv.Atoi(r.FormValue("divisor"))
+	if errTwo != nil {
+		//handle error
+	}
+
+	if divisor == 0 {
+		fmt.Fprintf(w, "Cannot divide by zero")
+		return
+	}
+
+	fmt.Fprintf(w, "Result of Division = %d\n", dividend/divisor)
+
+}
+
 func main() {
 
 	fileServer := http.FileServer(http.Dir("./static"))
@@ -74,6 +100,7 @@ func main() {
 	http.HandleFunc("/add", addHandler)
 	http.HandleFunc("/subtract", subtractHandler)
 	http.HandleFunc("/multiply", multiplyHandler)
+	http.HandleFunc("/divide", divisionHandler)
 
 	fmt.Printf("Starting server at port 8080\n")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
