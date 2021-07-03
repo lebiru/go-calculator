@@ -47,12 +47,33 @@ func subtractHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func multiplyHandler(w http.ResponseWriter, r *http.Request) {
+
+	if err := r.ParseForm(); err != nil {
+		fmt.Fprintf(w, "ParseForm() err:%v", err)
+		return
+	}
+	fmt.Fprintf(w, "POST request successful \n")
+	multiplier, errOne := strconv.Atoi(r.FormValue("multiplier"))
+	if errOne != nil {
+		//handle error
+	}
+	multiplicand, errTwo := strconv.Atoi(r.FormValue("multiplicand"))
+	if errTwo != nil {
+		//handle error
+	}
+
+	fmt.Fprintf(w, "Result of Multiplication = %d\n", multiplier*multiplicand)
+
+}
+
 func main() {
 
 	fileServer := http.FileServer(http.Dir("./static"))
 	http.Handle("/", fileServer)
 	http.HandleFunc("/add", addHandler)
 	http.HandleFunc("/subtract", subtractHandler)
+	http.HandleFunc("/multiply", multiplyHandler)
 
 	fmt.Printf("Starting server at port 8080\n")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
